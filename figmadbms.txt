@@ -1,0 +1,111 @@
+ create table city
+  2  (
+  3  cname varchar2(20) primary key,
+  4  state varchar2(20),
+  5  country varchar2(20)
+  6  );
+
+Table created.
+
+select * from city;
+
+CNAME                STATE                COUNTRY
+-------------------- -------------------- --------------------
+Bangalore            Karnataka            India
+Dabolim              Goa                  India
+Kochi                Kerala               India
+Changi               Singapore            Malaysia
+Tokyo                                     Japan
+Delhi                Haryana              India
+Hyderabad            Telangana            India
+Mumbai               Maharashtra          India
+Beijing                                   China
+Dubai                                     United Arab Emirates
+
+create table airport
+  2  (
+  3  apname varchar2(20),
+  4  country varchar2(20),
+  5  cname varchar2(20),
+  6  constraint fk_ap
+  7  foreign key (cname) references city (cname)
+  8  );
+
+Table created.
+
+SQL> set linesize 200
+SQL> select * from airport;
+
+APNAME                                                                           COUNTRY              CNAME
+-------------------------------------------------------------------------------- -------------------- --------------------
+Kempegowda International Airport                                                 India                Bangalore
+Goa international Airport                                                        India                Dabolim
+Cochin International Airport                                                     India                Kochi
+Singapore Changi Airport                                                         Malaysia             Changi
+Haneda Airport                                                                   Japan                Tokyo
+Indira Gandhi International Airport                                              India                Delhi
+Rajiv Gandhi International Airport                                               India                Hyderabad
+Chhatrapati Shivaji Maharaj International Airport                                India                Mumbai
+Beijing Capital International Airport                                            China                Beijing
+Dubai International Airport                                                      United Arab Emirates Dubai
+
+10 rows selected.
+
+SQL> create table airlines
+  2  (
+  3  ar_id int primary key,
+  4  ar_name varchar2(30),
+  5  ar_code int
+  6  );
+
+AR_ID      AR_NAME                           AR_CODE
+---------- ------------------------------ ----------
+6E         IndiGo                                953
+SG         SpiceJet                              378
+G8         Go Air                                896
+UK         Vistara                               265
+EK         Emirates                              764
+QR4        Qatar Airways                         442
+AI9        AirIndia                              649
+I5         Air Asia                              583
+TG         Thai Airways                          872
+JS2        JetStar                               363
+
+10 rows selected.
+
+SQL> create table booking
+  2  (
+  3  booking_id int primary key,
+  4  ar_id varchar2(10),
+  5  constraint fk_ar
+  6  foreign key (ar_id) references airlines(ar_id)
+  7  );
+
+Table created.
+
+SQL> create table passenger
+  2  (
+  3  pass_id int primary key,
+  4  pass_fname varchar2(20),
+  5  pass_class varchar2(20),
+  6  pass_date date
+  7  );
+
+Table created.
+
+SQL> create table flight
+  2  (
+  3  flight_id varchar2(10),
+  4  ar_id Varchar2(10),
+  5  constraint fk_air
+  6  foreign key (ar_id) references airlines(ar_id),
+  7  fl_source varchar2(20),
+  8  fl_date date,
+  9  fl_seat int,
+ 10  fl_class int,
+ 11  fl_cost int
+ 12  );
+
+Table created.
+
+

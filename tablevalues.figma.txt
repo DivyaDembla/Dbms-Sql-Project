@@ -1,0 +1,223 @@
+SQL> select * from city;
+
+CNAME                          STATE                          COUNTRY
+------------------------------ ------------------------------ ------------------------------
+New York City                  New York                       United States
+Mumbai                         Maharashtra                    India
+Delhi                          Delhi                          India
+San Francisco                  California                     United States
+Ota Tokyo                      Kanto                          Japan
+Chandigarh                     Chandigarh                     India
+Frankfurt                      Messe                          Germany
+Chek Lap Kok                   Chek lap Kok                   HongKong
+Denver                         Colorado                       US
+Vantaa                         Vantaa                         Finland
+
+10 rows selected.
+
+SQL> select * from airport;
+
+AP_NAME                                                                                              STATE                          CNAME                          COUNTRY
+---------------------------------------------------------------------------------------------------- ------------------------------ ------------------------------ --------------------
+John F Kennedy International Airport                                                                 New York                       New York City                  United States
+Indira Gandhi International Airport                                                                  Delhi                          Delhi                          India
+San Francisco International Airport                                                                  California                     San Francisco                  United States
+Haneda International Airport                                                                         Tokyo                          Ota Tokyo                      Japan
+Chandigarh International Airport                                                                     Chandigarh                     Chandigarh                     India
+FrankFurt Airport                                                                                    Messe                          Frankfurt                      Germany
+HongKong International Airport                                                                       Chek Lap Kok                   Chek Lap Kok                   HongKong
+Denver International Airport                                                                         Colorado                       Denver                         United States
+HelSinki Airport                                                                                     Vantaa                         Vantaa                         Finland
+Go Flyin International Airport                                                                       Maharashtra                    Mumbai                         India
+
+10 rows selected.
+
+SQL> select * from airlines;
+
+AIRLINES_I AL_NAME                        AL_CO
+---------- ------------------------------ -----
+AI         Air India Limited              098
+BA         British Airways                125
+EK         Emirates                       176
+AA         American airlines              001
+9W         Jet Airways                    157
+DA         Delta Airlines                 006
+
+6 rows selected.
+
+SQL> select * from ref1;
+
+AIRLINE_ID AP_NAME
+---------- ----------------------------------------------------------------------------------------------------
+AI         Chandigarh International Airport
+AI         Indira Gandhi International Airport
+AI         HongKong International Airport
+AI         San Francisco International Airport
+AI         Go Flyin International Airport
+BA         John F Kennedy International Airport
+BA         Go Flyin International Airport
+BA         Haneda International Airport
+BA         Denver International Airport
+BA         Indira Gandhi International Airport
+EK         FrankFurt Airport
+
+AIRLINE_ID AP_NAME
+---------- ----------------------------------------------------------------------------------------------------
+EK         Haneda International Airport
+EK         HelSinki Airport
+EK         Denver International Airport
+EK         Go Flyin International Airport
+AA         Haneda International Airport
+AA         John F Kennedy International Airport
+AA         Indira Gandhi International Airport
+AA         Chandigarh International Airport
+AA         San Francisco International Airport
+9W         HelSinki Airport
+9W         Denver International Airport
+
+AIRLINE_ID AP_NAME
+---------- ----------------------------------------------------------------------------------------------------
+9W         HongKong International Airport
+9W         Go Flyin International Airport
+9W         Chandigarh International Airport
+
+25 rows selected.
+
+SQL> select * from flight;
+
+FLIGHT_COD SOURCE     DESTINATIO ARRIVAL    DEPARTURE       STATUS     DURATION        NO_OF_STOPS          LAYOVER_TIME         AIRLINE_ID
+---------- ---------- ---------- ---------- --------------- ---------- --------------- -------------------- -------------------- ----------
+AI2018     Mumbai     HongKong   10:15      11:20           On_time    5hr             0                    0                    AI
+EK9864     Mumbai     Denver     15:12      16:38           On_time    20hr            2                    0                    EK
+BA1609     New York   Mumbai     8:14       10:00           Delayed    16hr            1                    0                    BA
+AA4367     Mumbai     Tokyo      18:40      20:00           Delayed    9hr             1                    3                    AA
+AA1902     Mumbai     Delhi      9:18       10:50           Delayed    3hr             0                    0                    AA
+EK1002     Mumbai     Messe      23:10      24:00           On_time    10hr            1                    0                    EK
+9W0743     Colorado   Mumbai     5:20       7:15            Delayed    16hr            2                    5                    9W
+AI2016     Vantaa     Mumbai     8:40       9:55            On_time    11hr            2                    0                    AI
+BA0101     Chandigarh Mumbai     1:40       4:30            On_time    4hr             0                    0                    BA
+9W6412     Mumbai     California 11:15      1:25            On_time    20hr            1                    0                    9W
+AI2024     Mumbai     Colorado   15:15      17:25           Delayed    14hr            1                    0                    AI
+
+11 rows selected.
+
+
+SQL> select * from passenger1;
+
+      P_ID PASSPORT_N
+---------- ----------
+         1 A12345678
+         2 B24097612
+         3 C98765413
+         4 D34710714
+         5 E01020715
+         6 F10904216
+         7 G80427417
+         8 Q80924128
+         9 M40850529
+        10 S80520520
+
+10 rows selected.
+
+SQL> select * from passenger2;
+
+PASSPORT_N FNAME      MNAME      LNAME                ADDRESS                                                                                                   PHONE        AGE SEX              P_ID
+---------- ---------- ---------- -------------------- ---------------------------------------------------------------------------------------------------- ---------- ---------- ---------- ----------
+A12345678  John       Edward     Louis                15th street,New York                                                                                 8803421013         32 M                   1
+B24097612  Diana      M          Newgate              123 block,Los Angeles                                                                                9642109214         22 F                   2
+C98765413  Emma       E          Mockey               12 bldg,London                                                                                       8742074216         24 F                   3
+D34710714  Mohan      Ramesh     Darvesh              Bangaluru                                                                                            7208147164         28 M                   4
+E01020715  Ganesh     Vijay      Jagtap               Kurla,Maharashtra                                                                                    9410921462         14 M                   5
+F10904216  Disha      M          Patani               Bkc,Mumbai Maharashtra                                                                               9416120491         26 F                   6
+G80427417  Ryan       D          Gosling              16th street,Germany                                                                                  7410721041         32 M                   7
+Q80924128  Billy      P          Butchur              18 plaza,Calfornia                                                                                   8101061041         42 M                   8
+M40850529  Anna       De         Armor                Italy                                                                                                7101904216         29 F                   9
+S80520520  Shawn      B          Mendel               D Block,Russia                                                                                       9060421004         24 M                  10
+
+10 rows selected.
+
+SQL> select * from passenger3;
+
+      P_ID FLIGHT_COD
+---------- ----------
+         1 BA1609
+         2 AI2018
+         3 AA1902
+         4 9W0743
+         5 BA0101
+         6 9W6412
+         7 9W6412
+         8 EK1002
+         9 AA4367
+        10 EK9864
+
+10 rows selected.
+
+SQL> select * from ticket1;
+
+TICKET_NUMBER SOURCE     DESTINATIO DATEE_OF_ DATE_OF_B SEAT_NO    CLASS                          DATE_OF_C       P_ID PASSPORT_N
+------------- ---------- ---------- --------- --------- ---------- ------------------------------ --------- ---------- ----------
+   1.7689E+12 New York   Mumbai     24-NOV-23 12-AUG-23 43B        Economy                                           1 A12345678
+   5.8910E+12 Mumbai     Hong Kong  28-NOV-23 14-SEP-23 12C        Economy                                           2 B24097612
+   1.5777E+12 Mumbai     Delhi      22-OCT-23 12-JAN-23 18D        Business                                          3 C98765413
+   7.0643E+13 Colorado   Mumbai     12-OCT-23 18-MAY-23 09A        First Class                                       4 D34710714
+   1.5709E+12 Chandigarh Mumbai     11-DEC-23 24-AUG-23 45D        Business                                          5 E01020715
+   1.2557E+12 Mumbai     California 02-OCT-23 28-JUL-23 37F        First Class                    14-AUG-23          6 F10904216
+   1.2588E+12 Mumbai     California 04-NOV-23 02-APR-23 55C        Economy                                           7 G80427417
+   5.3891E+12 Mumbai     Messe      18-OCT-23 15-MAY-23 38A        Economy                                           8 Q80924128
+   2.2065E+12 Mumbai     Tokyo      12-JAN-24 19-AUG-23 20C        Economy                                           9 M40850529
+   1.8076E+12 Mumbai     Denver     14-FEB-24 02-SEP-23 54E        Economy                        09-SEP-23         10 S80520520
+
+10 rows selected.
+
+SQL> select * from ticket2;
+
+DATE_OF_B SOURCE               DESTINATION          CLASS                     PRICE
+--------- -------------------- -------------------- -------------------- ----------
+12-AUG-23 New York             Mumbai               Economy                   95000
+14-SEP-23 Mumbai               HongKong             Economy                  100000
+12-JAN-23 Mumbai               Delhi                Business                 200000
+18-MAY-23 Colorado             Mumbai               First class              150000
+24-AUG-23 Chandigarh           Mumbai               Business                 140000
+28-JUL-23 Mumbai               California           First Class              220000
+02-APR-23 Mumbai               California           Economy                   80000
+15-MAY-23 Mumbai               Messe                Economy                   75000
+19-AUG-23 Mumbai               Tokyo                Economy                   91000
+02-SEP-23 Mumbai               Denver               Economy                   98000
+
+10 rows selected.
+
+SQL> select * from ticket3;
+
+DATE_OF_C  SURCHARGE
+--------- ----------
+14-AUG-23      75000
+09-SEP-23      14000
+
+SQL>
+SQL> select * from employee1;
+
+EMPLOYEE_ID FNAME      MNAME      LNAME      ADDRESS                                                                                                   PHONE        AGE SEX        JOB_TYPE                                 SHIFT                POSITION                 SALARY
+----------- ---------- ---------- ---------- ---------------------------------------------------------------------------------------------------- ---------- ---------- ---------- ---------------------------------------- -------------------- -------------------- ----------
+  123456789 Manish     S          Chaudhary  Kurla                                                                                                9980421074         34 M          Administrative Support                                                                  55000
+  333445551 Suraj      D          Oberoi     Mankurd                                                                                              9998246171         32 M          Traffic Monitoring                                                                      80000
+  124010671 Sarthak    U          Kamble     Dadar                                                                                                8842106241         41 M          Engineer                                 Day                                            70000
+  203010210 Pushpak    V          Ingle      Matunga                                                                                              8078074210         22 M          Engineer                                 Day                                            70000
+  666884444 Kinjal     A          Jadeya     Sion                                                                                                 7707420108         28 F          Traffic Monitoring                                                                      80000
+  222410018 Vaishnavi  S          Pathak     Vashi                                                                                                8804074201         32 F          Engineer                                 Night                                          70000
+ 4444888001 Ritik      S          Patil      Rabale                                                                                               9880942018         29 M          Administrative Support                                                                  50000
+  888667777 Ritika     M          Khandore   Airoli                                                                                               9898640743         40 F          Airport Administrator                                                                   90000
+ 8012111666 Ankita     R          Shewale    Ghatkopar                                                                                            9.8345E+10         32 F          Administrative Support                                                                  50000
+  442200816 Rahul      G          Shirke     Chembur                                                                                              9.7243E+10         40 M          Airport Administrator                                                                   90000
+
+10 rows selected.
+
+SQL> select * from employee2;
+
+JOB_TYPE                                     SALARY
+---------------------------------------- ----------
+Administrative Support                        50000
+Engineer                                      70000
+Traffic Monitoring                            80000
+Airport Administrator                         90000
+

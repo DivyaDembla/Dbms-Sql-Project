@@ -1,0 +1,158 @@
+Tables Creation:
+
+SQL> create table  city
+  2  (
+  3  Cname  varchar2(30) primary key,
+  4  State varchar2(30),
+  5  Country varchar2(30)
+  6  );
+
+Table created.
+
+SQL> create table Airport
+  2  (
+  3  AP_name varchar2(100) primary key,
+  4  state varchar2(30),
+  5  country varchar2(10),
+  6  cname varchar2(30),
+  7  constraints fk_cname
+  8  foreign key (cname) references city(cname)
+  9  );
+
+Table created.
+
+SQL> create table airlines
+  2  (
+  3  airlines_id varchar2(10) primary key,
+  4  al_name varchar2(30),
+  5  al_code varchar2(5)
+  6  );
+
+Table created.
+
+SQL> create table ref1
+  2  (
+  3  airline_id varchar2(10),
+  4  constraints fk_arid references airlines(airlines_id),
+  5  ap_name varchar2(100),
+  6  constraints fk_ap
+  7  foreign key(ap_name) references airport (ap_name)
+  8  );
+
+Table created.
+
+SQL> create table flight
+  2  (
+  3  flight_code varchar2(10) primary key,
+  4  source varchar2(10),
+  5  destination varchar2(10),
+  6  arrival varchar2(10),
+  7  departure varchar2(15),
+  8  status varchar2(10),
+  9  duration varchar2(15),
+ 10  no_of_stops varchar2(20),
+ 11  layover_time varchar2(20),
+ 12  airline_id varchar2(10),
+ 13  constraints fk_airid
+ 14  foreign key(airline_id) references airlines (airlines_id)
+ 15  );
+
+Table created.
+
+SQL> create table passenger1
+  2  (
+  3  p_id int primary key,
+  4  passport_no varchar2(10) not  null
+  5  );
+
+Table created.
+
+SQL> create table passenger2
+  2  (
+  3  passport_no varchar2(10) primary key,
+  4  fname varchar2(10),
+  5  mname varchar2(10),
+  6  lname varchar2(20),
+  7  address varchar2(100),
+  8  phone int,
+  9  age int,
+ 10  sex varchar2(10)
+ 11  );
+
+Table created.
+
+SQL> create table ticket1
+  2  (
+  3  ticket_number int primary key,
+  4  source varchar2(10),
+  5  destination varchar2(10),
+  6  date_of_booking varchar2(10),
+  7  date_of_travel varchar2(10),
+  8  seat_no varchar2(10),
+  9  class varchar2(10),
+ 10  date_of_cancellation varchar2(15),
+ 11  p_id int,
+ 12  constraints fk_pid
+ 13  foreign key (p_id) references passenger1(p_id),
+ 14  passport_no varchar2(10),
+ 15  constraints fk_passno
+ 16  foreign key(passport_no) references passenger1(passport_no)
+ 17  );
+
+Table created.
+
+SQL> create table ticket2
+  2  (
+  3  date_of_booking date,
+  4  constraints fk_dob
+  5  foreign key (date_of_booking) references ticket1(date_of_booking),
+  6  source varchar2(20),
+  7  destination varchar2(20),
+  8  class varchar2(20),
+  9  price int
+ 10  );
+
+Table created.
+
+SQL> create table passenger3
+  2  (
+  3  p_id int primary key,
+  4  flight_code varchar2(10),
+  5  constraints fk_flc
+  6  foreign key(flight_code) references flight(flight_code)
+  7  );
+
+Table created.
+
+SQL> create table ticket3
+  2  (
+  3  date_of_cancellation date primary key,
+  4  surcharge int
+  5  );
+
+Table created.
+
+SQL> create table employee1
+  2  (
+  3  employee_id int primary key,
+  4  fname varchar2(10),
+  5  mname varchar2(10),
+  6  lname varchar2(10),
+  7  address varchar2(100),
+  8  phone int,
+  9  age int,
+ 10  sex varchar2(10),
+ 11  job_type varchar2(40),
+ 12  shift varchar2(20),
+ 13  position varchar2(20)
+ 14  );
+
+Table created.
+
+SQL> create table employee2
+  2  (
+  3  job_type varchar2(20) primary key,
+  4  salary int
+  5  );
+
+Table created.

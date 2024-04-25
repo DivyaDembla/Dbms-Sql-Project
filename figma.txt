@@ -1,0 +1,860 @@
+SQL> create table  city
+  2  (
+  3  Cname  varchar2(30) primary key,
+  4  State varchar2(30),
+  5  Country varchar2(30)
+  6  );
+
+Table created.
+
+SQL> create table Airport
+  2  (
+  3  AP_name varchar2(100) primary key,
+  4  state varchar2(30),
+  5  country varchar2(10),
+  6  cname varchar2(30),
+  7  constraints fk_cname
+  8  foreign key (cname) references city(cname)
+  9  );
+
+Table created.
+
+SQL> create table airlines
+  2  (
+  3  airlines_id varchar2(10) primary key,
+  4  al_name varchar2(30),
+  5  al_code varchar2(5)
+  6  );
+
+Table created.
+
+SQL> create table ref1
+  2  (
+  3  airline_id varchar2(10),
+  4  constraints fk_arid references airlines(airlines_id),
+  5  ap_name varchar2(100),
+  6  constraints fk_ap
+  7  foreign key(ap_name) references airport (ap_name)
+  8  );
+
+Table created.
+
+SQL> create table flight
+  2  (
+  3  flight_code varchar2(10) primary key,
+  4  source varchar2(10),
+  5  destination varchar2(10),
+  6  arrival varchar2(10),
+  7  departure varchar2(15),
+  8  status varchar2(10),
+  9  duration varchar2(15),
+ 10  no_of_stops varchar2(20),
+ 11  layover_time varchar2(20),
+ 12  airline_id varchar2(10),
+ 13  constraints fk_airid
+ 14  foreign key(airline_id) references airlines (airlines_id)
+ 15  );
+
+Table created.
+
+SQL> create table passenger1
+  2  (
+  3  p_id int primary key,
+  4  passport_no varchar2(10) not  null
+  5  );
+
+Table created.
+
+SQL> create table passenger2
+  2  (
+  3  passport_no varchar2(10) primary key,
+  4  fname varchar2(10),
+  5  mname varchar2(10),
+  6  lname varchar2(20),
+  7  address varchar2(100),
+  8  phone int,
+  9  age int,
+ 10  sex varchar2(10)
+ 11  );
+
+Table created.
+
+SQL> create table ticket1
+  2  (
+  3  ticket_number int primary key,
+  4  source varchar2(10),
+  5  destination varchar2(10),
+  6  date_of_booking varchar2(10),
+  7  date_of_travel varchar2(10),
+  8  seat_no varchar2(10),
+  9  class varchar2(10),
+ 10  date_of_cancellation varchar2(15),
+ 11  p_id int,
+ 12  constraints fk_pid
+ 13  foreign key (p_id) references passenger1(p_id),
+ 14  passport_no varchar2(10),
+ 15  constraints fk_passno
+ 16  foreign key(passport_no) references passenger1(passport_no)
+ 17  );
+
+Table created.
+
+SQL> create table ticket2
+  2  (
+  3  date_of_booking date,
+  4  constraints fk_dob
+  5  foreign key (date_of_booking) references ticket1(date_of_booking),
+  6  source varchar2(20),
+  7  destination varchar2(20),
+  8  class varchar2(20),
+  9  price int
+ 10  );
+
+Table created.
+
+SQL> create table passenger3
+  2  (
+  3  p_id int primary key,
+  4  flight_code varchar2(10),
+  5  constraints fk_flc
+  6  foreign key(flight_code) references flight(flight_code)
+  7  );
+
+Table created.
+
+SQL> create table ticket3
+  2  (
+  3  date_of_cancellation date primary key,
+  4  surcharge int
+  5  );
+
+Table created.
+
+SQL> create table employee1
+  2  (
+  3  employee_id int primary key,
+  4  fname varchar2(10),
+  5  mname varchar2(10),
+  6  lname varchar2(10),
+  7  address varchar2(100),
+  8  phone int,
+  9  age int,
+ 10  sex varchar2(10),
+ 11  job_type varchar2(40),
+ 12  shift varchar2(20),
+ 13  position varchar2(20)
+ 14  );
+
+Table created.
+
+SQL> create table employee2
+  2  (
+  3  job_type varchar2(20) primary key,
+  4  salary int
+  5  );
+
+Table created.
+
+SQL> select * from employee1;
+
+EMPLOYEE_ID FNAME      MNAME      LNAME      ADDRESS
+   PHONE            AGE SEX        JOB_TYPE                                 SHIFT                POSITION
+----------- ---------- ---------- ---------- ---------------------------------------------------------------------------------------------------- ---------- ---------- ---------- ---------------------------------------- -------------------- --------------------
+  123456789 Manish     S          Chaudhary  Kurla                                                                                                9980421074             34 M          Administrative Support
+  333445551 Suraj      D          Oberoi     Mankurd                                                                                              9998246171             32 M          Traffic Monitoring
+  124010671 Sarthak    U          Kamble     Dadar                                                                                                8842106241             41 M          Engineer                                 Day
+  203010210 Pushpak    V          Ingle      Matunga                                                                                              8078074210             22 M          Engineer                                 Day
+  666884444 Kinjal     A          Jadeya     Sion                                                                                                 7707420108             28 F          Traffic Monitoring
+  222410018 Vaishnavi  S          Pathak     Vashi                                                                                                8804074201             32 F          Engineer                                 Night
+ 4444888001 Ritik      S          Patil      Rabale                                                                                               9880942018             29 M          Administrative Support
+  888667777 Ritika     M          Khandore   Airoli                                                                                               9898640743             40 F          Airport Administrator
+ 8012111666 Ankita     R          Shewale    Ghatkopar                                                                                            9.8345E+10             32 F          Administrative Support
+  442200816 Rahul      G          Shirke     Chembur                                                                                              9.7243E+10             40 M          Airport Administrator
+
+10 rows selected.
+
+SQL> select * from city;
+
+CNAME                          STATE                          COUNTRY
+------------------------------ ------------------------------ ------------------------------
+New York City                  New York                       United States
+Mumbai                         Maharashtra                    India
+Delhi                          Delhi                          India
+San Francisco                  California                     United States
+Ota Tokyo                      Kanto                          Japan
+Chandigarh                     Chandigarh                     India
+Frankfurt                      Messe                          Germany
+Chek Lap Kok                   Chek lap Kok                   HongKong
+Denver                         Colorado                       US
+Vantaa                         Vantaa                         Finland
+
+10 rows selected.
+
+SQL> select * from airport;
+
+AP_NAME                                                                                              STATE                          CNAME
+  COUNTRY
+---------------------------------------------------------------------------------------------------- ------------------------------ ------------------------------ --------------------
+John F Kennedy International Airport                                                                 New York                       New York City     United States
+Go Flyin International Airport                                                                       Maharashtra                    Mumbai
+  India
+Indira Gandhi International Airport                                                                  Delhi                          Delhi
+  India
+San Francisco International Airport                                                                  California                     San Francisco     United States
+Haneda International Airport                                                                         Tokyo                          Ota Tokyo         Japan
+Chandigarh International Airport                                                                     Chandigarh                     Chandigarh        India
+FrankFurt Airport                                                                                    Messe                          Frankfurt         Germany
+HongKong International Airport                                                                       Chek Lap Kok                   Chek Lap Kok      HongKong
+Denver International Airport                                                                         Colorado                       Denver
+  United States
+HelSinki Airport                                                                                     Vantaa                         Vantaa
+  Finland
+
+10 rows selected.
+
+SQL> select * from airlines;
+
+AIRLINES_I AL_NAME                        AL_CO
+---------- ------------------------------ -----
+AI         Air India Limited              098
+BA         British Airways                125
+EK         Emirates                       176
+AA         American airlines              001
+9W         Jet Airways                    157
+DA         Delta Airlines                 006
+
+6 rows selected.
+
+SQL> select * from ref1;
+
+AIRLINE_ID AP_NAME
+---------- ----------------------------------------------------------------------------------------------------
+AI         Chandigarh International Airport
+AI         Indira Gandhi International Airport
+AI         HongKong International Airport
+AI         San Francisco International Airport
+AI         Go Flyin International Airport
+BA         John F Kennedy International Airport
+BA         Go Flyin International Airport
+BA         Haneda International Airport
+BA         Denver International Airport
+BA         Indira Gandhi International Airport
+EK         FrankFurt Airport
+
+AIRLINE_ID AP_NAME
+---------- ----------------------------------------------------------------------------------------------------
+EK         Haneda International Airport
+EK         HelSinki Airport
+EK         Denver International Airport
+EK         Go Flyin International Airport
+AA         Haneda International Airport
+AA         John F Kennedy International Airport
+AA         Indira Gandhi International Airport
+AA         Chandigarh International Airport
+AA         San Francisco International Airport
+9W         HelSinki Airport
+9W         Denver International Airport
+
+AIRLINE_ID AP_NAME
+---------- ----------------------------------------------------------------------------------------------------
+9W         HongKong International Airport
+9W         Go Flyin International Airport
+9W         Chandigarh International Airport
+
+25 rows selected.
+
+SQL> select * from flight;
+
+FLIGHT_COD SOURCE     DESTINATIO ARRIVAL    DEPARTURE       STATUS     DURATION        NO_OF_STOPS          LAYOVER_TIME         AIRLINE_ID
+---------- ---------- ---------- ---------- --------------- ---------- --------------- -------------------- -------------------- ----------
+AI2018     Mumbai     HongKong   10:15      11:20           On_time    5hr             0                    0                    AI
+EK9864     Mumbai     Denver     15:12      16:38           On_time    20hr            2                    0                    EK
+BA1609     New York   Mumbai     8:14       10:00           Delayed    16hr            1                    0                    BA
+AA4367     Mumbai     Tokyo      18:40      20:00           Delayed    9hr             1                    3                    AA
+AA1902     Mumbai     Delhi      9:18       10:50           Delayed    3hr             0                    0                    AA
+EK1002     Mumbai     Messe      23:10      24:00           On_time    10hr            1                    0                    EK
+9W0743     Colorado   Mumbai     5:20       7:15            Delayed    16hr            2                    5                    9W
+AI2016     Vantaa     Mumbai     8:40       9:55            On_time    11hr            2                    0                    AI
+BA0101     Chandigarh Mumbai     1:40       4:30            On_time    4hr             0                    0                    BA
+9W6412     Mumbai     California 11:15      1:25            On_time    20hr            1                    0                    9W
+
+10 rows selected.
+
+SQL> select * from passenger1;
+
+      P_ID PASSPORT_N
+---------- ----------
+         1 A12345678
+         2 B24097612
+         3 C98765413
+         4 D34710714
+         5 E01020715
+         6 F10904216
+         7 G80427417
+         8 Q80924128
+         9 M40850529
+        10 S80520520
+
+10 rows selected.
+
+SQL> select * from passenger2;
+
+PASSPORT_N FNAME      MNAME      LNAME                ADDRESS                                                                                      PHONE         AGE SEX
+---------- ---------- ---------- -------------------- ---------------------------------------------------------------------------------------------------- ---------- ---------- ----------
+A12345678  John       Edward     Louis                15th street,New York
+  8803421013          32 M
+B24097612  Diana      M          Newgate              123 block,Los Angeles
+  9642109214          22 F
+C98765413  Emma       E          Mockey               12 bldg,London
+  8742074216          24 F
+D34710714  Mohan      Ramesh     Darvesh              Bangaluru
+  7208147164          28 M
+E01020715  Ganesh     Vijay      Jagtap               Kurla,Maharashtra
+  9410921462          14 M
+F10904216  Disha      M          Patani               Bkc,Mumbai Maharashtra
+  9416120491          26 F
+G80427417  Ryan       D          Gosling              16th street,Germany
+  7410721041          32 M
+Q80924128  Billy      P          Butchur              18 plaza,Calfornia
+  8101061041          42 M
+M40850529  Anna       De         Armor                Italy
+  7101904216          29 F
+S80520520  Shawn      B          Mendel               D Block,Russia
+  9060421004          24 M
+
+10 rows selected.
+
+SQL> select * from passenger3;
+
+      P_ID FLIGHT_COD
+---------- ----------
+         1 BA1609
+         2 AI2018
+         3 AA1902
+         4 9W0743
+         5 BA0101
+         6 9W6412
+         7 9W6412
+         8 EK1002
+         9 AA4367
+        10 EK9864
+
+10 rows selected.
+
+SQL> select * from ticket1;
+
+TICKET_NUMBER SOURCE     DESTINATIO DATEE_OF_ DATE_OF_B SEAT_NO    CLASS                          DATE_OF_C       P_ID PASSPORT_N
+------------- ---------- ---------- --------- --------- ---------- ------------------------------ --------- ---------- ----------
+   1.7689E+12 New York   Mumbai     24-NOV-23 12-AUG-23 43B        Economy                                           1 A12345678
+   5.8910E+12 Mumbai     Hong Kong  28-NOV-23 14-SEP-23 12C        Economy                                           2 B24097612
+   1.5777E+12 Mumbai     Delhi      22-OCT-23 12-JAN-23 18D        Business                                          3 C98765413
+   7.0643E+13 Colorado   Mumbai     12-OCT-23 18-MAY-23 09A        First Class                                       4 D34710714
+   1.5709E+12 Chandigarh Mumbai     11-DEC-23 24-AUG-23 45D        Business                                          5 E01020715
+   1.2557E+12 Mumbai     California 02-OCT-23 28-JUL-23 37F        First Class                    14-AUG-23          6 F10904216
+   1.2588E+12 Mumbai     California 04-NOV-23 02-APR-23 55C        Economy                                           7 G80427417
+   5.3891E+12 Mumbai     Messe      18-OCT-23 15-MAY-23 38A        Economy                                           8 Q80924128
+   2.2065E+12 Mumbai     Tokyo      12-JAN-24 19-AUG-23 20C        Economy                                           9 M40850529
+   1.8076E+12 Mumbai     Denver     14-FEB-24 02-SEP-23 54E        Economy                        09-SEP-23         10 S80520520
+
+10 rows selected.
+
+SQL> select * from ticket2;
+
+DATE_OF_B SOURCE               DESTINATION          CLASS                     PRICE
+--------- -------------------- -------------------- -------------------- ----------
+12-AUG-23 New York             Mumbai               Economy                   95000
+14-SEP-23 Mumbai               HongKong             Economy                  100000
+12-JAN-23 Mumbai               Delhi                Business                 200000
+18-MAY-23 Colorado             Mumbai               First class              150000
+24-AUG-23 Chandigarh           Mumbai               Business                 140000
+28-JUL-23 Mumbai               California           First Class              220000
+02-APR-23 Mumbai               California           Economy                   80000
+15-MAY-23 Mumbai               Messe                Economy                   75000
+19-AUG-23 Mumbai               Tokyo                Economy                   91000
+02-SEP-23 Mumbai               Denver               Economy                   98000
+
+10 rows selected.
+
+SQL> select * from ticket3;
+
+DATE_OF_C  SURCHARGE
+--------- ----------
+14-AUG-23      75000
+09-SEP-23      14000
+
+SQL> select * from employee1;
+
+EMPLOYEE_ID FNAME      MNAME      LNAME      ADDRESS                                                                                                   PHONE            AGE SEX        JOB_TYPE                                 SHIFT                POSITION                 SALARY
+----------- ---------- ---------- ---------- ---------------------------------------------------------------------------------------------------- ---------- ---------- ---------- ---------------------------------------- -------------------- -------------------- ----------
+  123456789 Manish     S          Chaudhary  Kurla                                                                                                9980421074             34 M          Administrative Support                                                                  50000
+  333445551 Suraj      D          Oberoi     Mankurd                                                                                              9998246171             32 M          Traffic Monitoring                                                                      80000
+  124010671 Sarthak    U          Kamble     Dadar                                                                                                8842106241             41 M          Engineer                                 Day                                            70000
+  203010210 Pushpak    V          Ingle      Matunga                                                                                              8078074210             22 M          Engineer                                 Day                                            70000
+  666884444 Kinjal     A          Jadeya     Sion                                                                                                 7707420108             28 F          Traffic Monitoring                                                                      80000
+  222410018 Vaishnavi  S          Pathak     Vashi                                                                                                8804074201             32 F          Engineer                                 Night                                          70000
+ 4444888001 Ritik      S          Patil      Rabale                                                                                               9880942018             29 M          Administrative Support                                                                  50000
+  888667777 Ritika     M          Khandore   Airoli                                                                                               9898640743             40 F          Airport Administrator                                                                   90000
+ 8012111666 Ankita     R          Shewale    Ghatkopar                                                                                            9.8345E+10             32 F          Administrative Support                                                                  50000
+  442200816 Rahul      G          Shirke     Chembur                                                                                              9.7243E+10             40 M          Airport Administrator                                                                   90000
+
+10 rows selected.
+
+SQL> select * from employee2;
+
+JOB_TYPE                                     SALARY
+---------------------------------------- ----------
+Administrative Support                        50000
+Engineer                                      70000
+Traffic Monitoring                            80000
+Airport Administrator                         90000
+
+Q1) Select Fname,lname as FULLNAME where name starts with R and age in 35,40
+
+select concat(fname,lname) as "FullName",job_type,salary
+from employee1
+where fname like 'R%' and age in (35,40);
+
+FullName             JOB_TYPE                                     SALARY
+-------------------- ---------------------------------------- ----------
+RitikaKhandore       Airport Administrator                         90000
+RahulShirke          Airport Administrator                         90000
+
+
+Q2) Count the number of passengers who will be travelling in the month of october
+
+SELECT COUNT(P_ID) AS PASSENGER_COUNT
+FROM TICKET1
+WHERE TO_CHAR(DATEE_OF_TRAVEL,'MON')='OCT';
+
+PASSENGER_COUNT
+---------------
+              4
+
+Q3) Count the numbers of Male and female passengers out of Total Passenger
+
+    SELECT CLASS AS CLASS,
+    COUNT(CASE WHEN SEX='M' THEN 1 END) AS MALE_COUNT,
+    COUNT(CASE WHEN SEX='F' THEN  1 END) AS FEMALE_COUNT,
+    COUNT (*) AS TOTAL_COUNT
+    FROM PASSENGER2
+    LEFT JOIN
+    TICKET1 ON PASSENGER2.PASSPORT_NO=TICKET1.PASSPORT_NO
+    GROUP BY CLASS;
+
+CLASS                          MALE_COUNT FEMALE_COUNT TOTAL_COUNT
+------------------------------ ---------- ------------ -----------
+Economy                                 4            2           6
+Business                                1            1           2
+First Class                             1            1           2
+
+Q4) Join the details of Passenger1 and passenger3
+
+   select p1.p_id,p3.flight_code,p1.passport_no
+   from passenger1 p1
+   full join
+   passenger3 p3 on p1.p_id=p3.p_id;
+
+      P_ID FLIGHT_COD PASSPORT_N
+---------- ---------- ----------
+         1 BA1609     A12345678
+         2 AI2018     B24097612
+         3 AA1902     C98765413
+         4 9W0743     D34710714
+         5 BA0101     E01020715
+         6 9W6412     F10904216
+         7 9W6412     G80427417
+         8 EK1002     Q80924128
+         9 AA4367     M40850529
+        10 EK9864     S80520520
+
+10 rows selected.
+
+Q5) Select ticket no and passport id of the passenger who have not cancelled the ticket and travelling from mumbai
+
+   select ticket_number,passport_no
+   from ticket1
+   where date_of_cancellation is null and source='Mumbai';
+
+TICKET_NUMBER PASSPORT_N
+------------- ----------
+   5.8910E+12 B24097612
+   1.5777E+12 C98765413
+   1.2588E+12 G80427417
+   5.3891E+12 Q80924128
+   2.2065E+12 M40850529
+
+Q6) Select Airport name,State and City of the Airport which are located within India;
+
+   select ap_name,state,cname
+   from airport
+   where country='India';
+
+AP_NAME                                                                                              STATE                          CNAME
+---------------------------------------------------------------------------------------------------- ------------------------------ ------------------------------
+Indira Gandhi International Airport                                                                  Delhi                          Delhi
+Chandigarh International Airport                                                                     Chandigarh                     Chandigarh
+Go Flyin International Airport                                                                       Maharashtra                    Mumbai
+
+Q7) Count the flights that are delayed and also which are on time
+
+    SELECT STATUS,
+    COUNT( CASE WHEN STATUS='Delayed' THEN 1 END) AS DELAYED_FLIGHT,
+    COUNT( CASE WHEN STATUS='On_time' THEN 1 END) AS  ON_TIME_FLIGHT
+    FROM FLIGHT
+    GROUP BY STATUS;
+
+STATUS     DELAYED_FLIGHT ON_TIME_FLIGHT
+---------- -------------- --------------
+Delayed                 4              0
+On_time                 0              6
+
+Q8) Select Second highest Price of Ticket where the class is Business
+
+
+     SELECT *
+     FROM TICKET2
+     WHERE PRICE=(SELECT MAX(PRICE) FROM TICKET2
+     WHERE PRICE<(SELECT MAX(PRICE) FROM TICKET2
+     WHERE CLASS='Business'));
+
+DATE_OF_B SOURCE               DESTINATION          CLASS                     PRICE
+--------- -------------------- -------------------- -------------------- ----------
+18-MAY-23 Colorado             Mumbai               First class              150000
+
+Q9) Select the Third Highest price of the ticket where the Class is Economy
+
+
+    SELECT *
+    FROM TICKET2
+    WHERE PRICE=(SELECT MAX(PRICE) FROM TICKET2
+    WHERE PRICE<(SELECT MAX(PRICE) FROM TICKET2
+    WHERE PRICE<(SELECT MAX(PRICE) FROM TICKET2
+    WHERE CLASS='Economy')));
+
+DATE_OF_B SOURCE               DESTINATION          CLASS                     PRICE
+--------- -------------------- -------------------- -------------------- ----------
+12-AUG-23 New York             Mumbai               Economy                   95000
+
+Q10)Select the job_type,Total salary and Count the employees working according to the job
+
+
+    SELECT JOB_TYPE,SUM(SALARY),COUNT(SALARY) AS EMPLOYEE_NO
+    FROM EMPLOYEE1
+    GROUP BY JOB_TYPE;
+
+JOB_TYPE                                 SUM(SALARY) EMPLOYEE_NO
+---------------------------------------- ----------- -----------
+Traffic Monitoring                            160000           2
+Engineer                                      210000           3
+Administrative Support                        150000           3
+Airport Administrator                         180000           2
+
+Q11) Select passport no,ticket no and fullname of the passenger who have cancelled the ticket
+
+
+    SELECT TICKET1.PASSPORT_NO,TICKET_NUMBER,CONCAT(FNAME ,LNAME) AS "FULL NAME"
+    FROM TICKET1 LEFT JOIN
+    PASSENGER2 ON TICKET1.PASSPORT_NO=PASSENGER2.PASSPORT_NO
+    WHERE DATE_OF_CANCELLATION IS NOT NULL;
+
+PASSPORT_N TICKET_NUMBER FULL NAME
+---------- ------------- ------------------------------
+F10904216     1.2557E+12 DishaPatani
+S80520520     1.8076E+12 ShawnMendel
+
+Q12)Select the passenger name who have to pay the surcharge
+
+      SELECT CONCAT(FNAME ,LNAME) AS "FULL NAME",TICKET1.PASSPORT_NO,TICKET_NUMBER,SURCHARGE
+      FROM TICKET1 LEFT JOIN
+      PASSENGER2 ON TICKET1.PASSPORT_NO=PASSENGER2.PASSPORT_NO
+      JOIN TICKET3 ON TICKET1.DATE_OF_CANCELLATION=TICKET3.DATE_OF_CANCELLATION
+      WHERE DATE_OF_CANCELLATION IS NOT NULL;
+
+FULL NAME                      PASSPORT_N TICKET_NUMBER  SURCHARGE
+------------------------------ ---------- ------------- ----------
+DishaPatani                    F10904216     1.2557E+12      75000
+ShawnMendel                    S80520520     1.8076E+12      14000
+ 
+Q13) PLsql block to demonstrate the salary and jobtype of the employee for the id provided by the user
+
+  declare
+  v_salary number(8);
+  v_fname varchar2(20);
+  v_id number(15):=&v_id;
+  v_job_type varchar2(200);
+  begin
+  select salary,fname,job_type into v_salary,v_fname,v_job_type from employee1
+  where employee_id=&v_id;
+  dbms_output.put_line(v_fname ||' '||'has salary '||v_salary||' ' || 'and his job is '||v_job_type);
+  end;
+  /
+Enter value for v_id: 4444888001
+old   4: v_id number(15):=&v_id;
+new   4: v_id number(15):=4444888001;
+Enter value for v_id: 4444888001
+old   8: where employee_id=&v_id;
+new   8: where employee_id=4444888001;
+Ritik has salary 50000 and his job is Administrative Support
+
+PL/SQL procedure successfully completed.
+
+Q14) Write e plsql block to display the airline_id and airlines_name for the airline code given  by user;
+
+  declare
+  ar_id varchar2(10);
+  ar_name varchar2(30);
+  ar_code varchar2(5):='&ar_code';
+  begin
+  select airlines_id,al_name into ar_id,ar_name
+  from airlines
+  where ar_code=al_code;
+  dbms_output.put_line('Your airline id is ' || ar_id || ' and your Airline name is ' || ar_name);
+  end;
+  /
+Enter value for ar_code: 001
+old   4: ar_code varchar2(5):='&ar_code';
+new   4: ar_code varchar2(5):='001';
+Your airline id is AA and your Airline name is American airlines
+
+PL/SQL procedure successfully completed.
+
+Q15) Insert new row in flight table using plsql creating a procedure
+
+  create or replace procedure add_to_flight
+  (f_code in flight.flight_code%type,
+  f_source in flight.source%type,
+  f_dest in flight.destination%type,
+  f_arrival in flight.arrival%type,
+  f_dept in flight.departure%type,
+  f_status in flight.status%type,
+  f_dur in flight.duration%type,
+  f_stops in flight.no_of_stops%type,
+  f_layover in flight.layover_time%type,
+  f_arid in flight.airline_id%type)
+  is
+  begin
+   insert into flight values(f_code,f_source,f_dest,f_arrival,f_dept,f_status,f_dur,f_stops,f_layover,f_arid);
+  dbms_output.put_line('Values added');
+  end;
+  /
+
+Procedure created.
+
+SQL> execute add_to_flight('AI2024','Mumbai','Colorado','15:15','17:25','Delayed','14hr',1,0,'AI');
+Values added
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from flight
+  2  where flight_code='AI2024';
+
+FLIGHT_COD SOURCE     DESTINATIO ARRIVAL    DEPARTURE       STATUS     DURATION        NO_OF_STOPS          LAYOVER_TIME         AIRLINE_ID
+---------- ---------- ---------- ---------- --------------- ---------- --------------- -------------------- -------------------- ----------
+AI2024     Mumbai     Colorado   15:15      17:25           Delayed    14hr            1                    0                    AI
+
+Q16) Update the salary of the employee with the if/else condition using plsql
+
+  declare
+  e_empid employee1.employee_id%type:=1;
+  e_sal employee1.salary%type;
+  e_jobtype employee1.job_type%type;
+  begin
+  e_empid:=&emp_id;
+  select salary
+  into e_sal
+  from employee1
+  where employee_id=e_empid;
+  if (e_sal<60000) then
+  update employee1
+  set salary=salary+5000
+  where employee_id=e_empid;
+  dbms_output.put_line('Salary updated by 5000');
+  else
+  dbms_output.put_line('Salary not updated');
+  end if;
+  end;
+  /
+Enter value for emp_id: 123456789
+old   6: e_empid:=&emp_id;
+new   6: e_empid:=123456789;
+Salary updated by 5000
+
+PL/SQL procedure successfully completed.
+
+Q17) Create a function and count the total employees
+
+
+  create or replace function total_employees
+  return number
+  is
+  total number:=0;
+  begin
+  select count(*) as "Total Employees"
+  into total
+  from employee1;
+  return total;
+  end;
+  /
+
+Function created.
+
+  declare
+  c number;
+  begin
+  c:=total_employees();
+  dbms_output.put_line('Total employees are '||c);
+  end;
+  /
+Total employees are 10
+
+PL/SQL procedure successfully completed.
+
+Q18) insert a new column p_id and insert the values using sequence
+
+  create sequence auto_pid
+  start with 1
+  increment by 1
+ minvalue 1
+ maxvalue 10
+ nocycle;
+
+Sequence created.
+
+alter table passenger2
+ add (p_id int);
+
+Table altered.
+
+SQL> update passenger2
+  2  set p_id=auto_pid.nextval;
+
+10 rows updated.
+
+SQL> select * from passenger2;
+
+PASSPORT_N FNAME      MNAME      LNAME                ADDRESS                                                                                                   PHONE        AGE SEX              P_ID
+---------- ---------- ---------- -------------------- ---------------------------------------------------------------------------------------------------- ---------- ---------- ---------- ----------
+A12345678  John       Edward     Louis                15th street,New York                                                                                 8803421013         32 M                   1
+B24097612  Diana      M          Newgate              123 block,Los Angeles                                                                                9642109214         22 F                   2
+C98765413  Emma       E          Mockey               12 bldg,London                                                                                       8742074216         24 F                   3
+D34710714  Mohan      Ramesh     Darvesh              Bangaluru                                                                                            7208147164         28 M                   4
+E01020715  Ganesh     Vijay      Jagtap               Kurla,Maharashtra                                                                                    9410921462         14 M                   5
+F10904216  Disha      M          Patani               Bkc,Mumbai Maharashtra                                                                               9416120491         26 F                   6
+G80427417  Ryan       D          Gosling              16th street,Germany                                                                                  7410721041         32 M                   7
+Q80924128  Billy      P          Butchur              18 plaza,Calfornia                                                                                   8101061041         42 M                   8
+M40850529  Anna       De         Armor                Italy                                                                                                7101904216         29 F                   9
+S80520520  Shawn      B          Mendel               D Block,Russia                                                                                       9060421004         24 M                  10
+
+10 rows selected.
+
+SQL> alter table passenger2
+  2  add constraints fk_passid foreign key(p_id) references passenger1 (p_id);
+
+Table altered.
+
+Q19) Create a procedure with exception to display the details of the passenger by the p_id given by user
+
+  create or replace procedure pro(pass_id in number,temp out passenger2%rowtype)
+  is
+  begin
+  select *  into temp from passenger2
+  where p_id=pass_id;
+  end;
+  /
+
+Procedure created.
+
+  declare
+  temp passenger2%rowtype;
+  pass_id number:=&pass_id;
+  begin
+  pro(pass_id,temp);
+  dbms_output.put_line('Passenger id is '||temp.p_id||', '||'Passenger name is '||temp.fname||' '||temp.mname||' '||temp.lname||' '||'and Passenger passport no is '||temp.Passport_no);
+  exception
+  when no_data_found then
+  dbms_output.put_line('No such Passenger');
+  when others then
+  dbms_output.put_line('Error');
+  end;
+  /
+Enter value for pass_id: 4
+old   3: pass_id number:=&pass_id;
+new   3: pass_id number:=4;
+Passenger id is 4, Passenger name is Mohan Ramesh Darvesh and Passenger passport no is D34710714
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for pass_id: 12
+old   3: pass_id number:=&pass_id;
+new   3: pass_id number:=12;
+No such Passenger
+
+PL/SQL procedure successfully completed.
+
+Q20) Write plsql block using explicit and implicit cursor
+
+declare
+t_source ticket1.source%type;
+t_dest ticket1.source%type;
+t_travel ticket1.datee_of_travel%type;
+cursor t_ticket1 is
+select source,destination,datee_of_travel from ticket1;
+begin
+open t_ticket1;
+loop
+fetch t_ticket1 into t_source,t_dest,t_travel;
+exit when t_ticket1%notfound;
+dbms_output.put_line('From '||t_source||', '||'To '||t_dest||', '||'On '||t_travel);
+end loop;
+close t_ticket1;
+end;
+/
+From New York, To Mumbai, On 24-NOV-23
+From Mumbai, To Hong Kong, On 28-NOV-23
+From Mumbai, To Delhi, On 22-OCT-23
+From Colorado, To Mumbai, On 12-OCT-23
+From Chandigarh, To Mumbai, On 11-DEC-23
+From Mumbai, To California, On 02-OCT-23
+From Mumbai, To California, On 04-NOV-23
+From Mumbai, To Messe, On 18-OCT-23
+From Mumbai, To Tokyo, On 12-JAN-24
+From Mumbai, To Denver, On 14-FEB-24
+
+PL/SQL procedure successfully completed.
+
+  declare
+  a number;
+  begin
+  update ticket2
+  set price=price+500;
+  if sql%notfound then
+  dbms_output.put_line('No workers selected');
+  elsif sql%found then
+  a:=sql%rowcount;
+  dbms_output.put_line(a||' tickets selected');
+  end if;
+  end;
+  /
+10 tickets selected
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from ticket2;
+
+DATE_OF_B SOURCE               DESTINATION          CLASS                     PRICE
+--------- -------------------- -------------------- -------------------- ----------
+12-AUG-23 New York             Mumbai               Economy                   95500
+14-SEP-23 Mumbai               HongKong             Economy                  100500
+12-JAN-23 Mumbai               Delhi                Business                 200500
+18-MAY-23 Colorado             Mumbai               First class              150500
+24-AUG-23 Chandigarh           Mumbai               Business                 140500
+28-JUL-23 Mumbai               California           First Class              220500
+02-APR-23 Mumbai               California           Economy                   80500
+15-MAY-23 Mumbai               Messe                Economy                   75500
+19-AUG-23 Mumbai               Tokyo                Economy                   91500
+02-SEP-23 Mumbai               Denver               Economy                   98500
+
+10 rows selected.
+
+
