@@ -123,10 +123,8 @@ EXEC add_to_flight('AI2024','Mumbai','Colorado','15:15','17:25','Delayed','14hr'
 
 👨‍💻 Author
 
-[Your Name]
+Sankalp Jadhav, Divya Dembla, Mohd Uzair, Snehal Dalvi
 
-Roll No: [Your Roll No]
-
-Department: Computer Science / IT
+Department: IT
 
 Project Type: Database Management Systems (Mini Project)
