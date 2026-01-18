@@ -1,57 +1,132 @@
-Airline Management System
+✈️ Airline Management System (DBMS Mini Project)
 
-This project focuses on building a structured and efficient Airline Management System using SQL and PL/SQL. The goal was to design a clean database schema, implement stored procedures and triggers, and create optimized queries that handle real airline data operations without slowing down.
+A comprehensive backend database project designed to simulate core airline operations. This system manages flight scheduling, ticket booking, passenger records, and employee administration using normalized tables and advanced PL/SQL automation.
 
-Features
+📌 Project Overview
 
-Well-defined relational database schema
+This project implements a relational database system to handle:
 
-PL/SQL procedures for automated operations
+Flight Operations: Scheduling flights, managing delays, and linking airlines to airports.
 
-Efficient queries for bookings, flights, passengers, and staff
+Passenger Management: A normalized structure separating passenger IDs, personal details, and flight associations.
 
-Data integrity maintained through constraints and triggers
+Ticketing System: Handling bookings, classes (Economy/Business/First), and calculating cancellation surcharges.
 
-Modular structure for easy expansion
+HR Management: Tracking employee shifts, job types, and automating salary updates.
 
-Tech Used
+🗂 Database Schema
 
-SQL
+The database is designed with Normalization (up to 3NF) to ensure data integrity.
 
-PL/SQL
+1. Flight & Infrastructure
 
-Oracle Database / MySQL (add your exact DB here)
+City: Stores city names mapped to states and countries.
 
-What You Can Do With It
+Airport: Airport details linked to specific cities (FK_CNAME).
 
-Manage flight schedules
+Airlines: Airline codes and names (e.g., AI for Air India).
 
-Handle passenger records
+Ref1: A bridge table linking Airlines to Airports.
 
-Process bookings
+Flight: The core schedule table containing source, destination, timing, status (Delayed/On-time), and connection details.
 
-Retrieve analytics through optimized queries
+2. Passenger & Ticketing
 
-Project Structure
+Passenger1: Base table storing unique Passenger IDs (P_ID) and Passport Numbers.
 
-/schema – Tables, relationships, constraints
+Passenger2: Stores personal details (Name, Address, Age, Sex).
 
-/plsql – Procedures, functions, triggers
+Passenger3: Links Passengers to specific Flight Codes.
 
-/queries – Sample operations and test queries
+Ticket1: Primary ticketing info (Dates, Seat No, Class, Cancellation Date).
 
-How to Run
+Ticket2: Stores pricing information linked to Ticket1.
 
-Import the database schema into your SQL environment.
+Ticket3: Stores surcharge amounts for cancelled tickets.
 
-Execute PL/SQL scripts to set up procedures and triggers.
+3. Human Resources
 
-Run the queries provided in the queries folder to test functionality.
+Employee1: Employee personal details, shifts, and positions.
 
-Future Improvements
+Employee2: Reference table for Salary grades based on Job Type.
 
-Add a front-end dashboard
+💻 Key Features & Queries
 
-Role-based access control
+This project includes 20+ optimized queries demonstrating various SQL capabilities:
 
-Real-time flight status integration
+🔍 Advanced SQL Analysis
+
+Pattern Matching: Retrieving employee names starting with specific letters (e.g., 'R') and specific age groups.
+
+Complex Joins:
+
+Full Join: Linking Passenger1 and Passenger3 to see flight associations.
+
+Three-Table Join: Connecting Ticket1, Passenger2, and Ticket3 to calculate surcharges for cancelled tickets.
+
+Pivot Logic: Counting Male vs. Female passengers per travel class using CASE statements.
+
+N-th Highest Value:
+
+Finding the 2nd Highest Business Class Price.
+
+Finding the 3rd Highest Economy Class Price using nested subqueries.
+
+⚙️ PL/SQL Automation
+
+The project utilizes procedural logic to handle business rules:
+
+Stored Procedures:
+
+add_to_flight: Accepts parameters to insert new flight schedules safely.
+
+pro: Retrieves passenger details with Exception Handling (NO_DATA_FOUND) for invalid IDs.
+
+Functions:
+
+total_employees: Returns the current count of active staff members.
+
+Cursors:
+
+Explicit Cursor: Iterates through tickets to print a route manifest (Source -> Destination).
+
+Implicit Cursor: Updates ticket prices in bulk (SQL%ROWCOUNT tracking).
+
+Triggers & Sequences:
+
+auto_pid: A sequence used to auto-generate Passenger IDs.
+
+Conditional Logic: PL/SQL blocks to update employee salaries if they fall below a specific threshold.
+
+🚀 How to Run
+
+Database Setup:
+
+Open your Oracle SQL environment (SQL*Plus or SQL Developer).
+
+Copy and execute the Table Creation scripts (create City, Airport, Airlines, etc.).
+
+Data Population:
+
+Insert the sample data provided in the script to populate the tables.
+
+Execute PL/SQL:
+
+Compile the Procedures and Functions.
+
+Run the anonymous blocks (the sections starting with DECLARE).
+
+Example execution:
+
+EXEC add_to_flight('AI2024','Mumbai','Colorado','15:15','17:25','Delayed','14hr',1,0,'AI');
+
+
+👨‍💻 Author
+
+[Your Name]
+
+Roll No: [Your Roll No]
+
+Department: Computer Science / IT
+
+Project Type: Database Management Systems (Mini Project)
